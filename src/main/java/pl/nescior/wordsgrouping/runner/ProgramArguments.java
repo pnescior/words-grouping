@@ -1,4 +1,4 @@
-package pl.nescior.wordsgrouping;
+package pl.nescior.wordsgrouping.runner;
 
 final class ProgramArguments {
     private ProgramArguments() {}

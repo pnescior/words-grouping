@@ -1,4 +1,7 @@
-package pl.nescior.wordsgrouping;
+package pl.nescior.wordsgrouping.runner;
+
+import pl.nescior.wordsgrouping.Group;
+import pl.nescior.wordsgrouping.WordsGrouper;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -7,12 +10,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static pl.nescior.wordsgrouping.ProgramArguments.FILE;
-import static pl.nescior.wordsgrouping.ProgramArguments.MAX_GROUP_DISTANCE;
+import static pl.nescior.wordsgrouping.runner.ProgramArguments.FILE;
+import static pl.nescior.wordsgrouping.runner.ProgramArguments.MAX_GROUP_DISTANCE;
 
 class Runner {
 
     private static final WordsGrouper wordsGrouper = new WordsGrouper();
+    private static final CsvPrinter csvPrinter = new CsvPrinter();
     private static final double DEFAULT_MAX_GROUP_DISTANCE = 2.5;
 
     public static void main(String[] args) throws IOException {
@@ -21,6 +25,7 @@ class Runner {
         List<String> strings = Files.readAllLines(Paths.get(arguments.get(FILE)));
         List<Group> groups = wordsGrouper.analyze(strings, getMaxGroupDistance(arguments));
         printFormattedGroups(groups);
+        csvPrinter.printTo("./result.txt", groups);
     }
 
     private static double getMaxGroupDistance(Map<String, String> arguments) {

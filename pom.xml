@@ -24,6 +24,11 @@
             <artifactId>commons-text</artifactId>
             <version>1.8</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-csv</artifactId>
+            <version>1.8</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -35,7 +40,7 @@
                     <finalName>${project.artifactId}</finalName>
                     <archive>
                         <manifest>
-                            <mainClass>pl.nescior.wordsgrouping.Runner</mainClass>
+                            <mainClass>pl.nescior.wordsgrouping.runner.Runner</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
