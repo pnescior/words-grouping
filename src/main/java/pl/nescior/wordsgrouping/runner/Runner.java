@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static java.util.stream.Collectors.toList;
 import static pl.nescior.wordsgrouping.runner.ProgramArguments.FILE;
 import static pl.nescior.wordsgrouping.runner.ProgramArguments.MAX_GROUP_DISTANCE;
 
@@ -25,7 +26,7 @@ class Runner {
         List<String> strings = Files.readAllLines(Paths.get(arguments.get(FILE)));
         List<Group> groups = wordsGrouper.analyze(strings, getMaxGroupDistance(arguments));
         printFormattedGroups(groups);
-        csvPrinter.printTo("./result.csv", groups);
+        csvPrinter.printTo("./data/result.csv", groups);
     }
 
     private static double getMaxGroupDistance(Map<String, String> arguments) {
@@ -39,11 +40,15 @@ class Runner {
     private static void printFormattedGroups(List<Group> groups) {
         groups.stream()
                 .map(Runner::formatGroup)
-                .forEach(System.out::println);
+                .forEachOrdered(System.out::println);
     }
 
     private static String formatGroup(Group group) {
-        return String.format("[%s]: %d", String.join(", ", group.getWords()), group.getCount());
+        List<String> wordsWithCount = group.getWords().stream()
+                .sorted()
+                .map(word -> String.format("%s %d", word.get(), word.getCount()))
+                .collect(toList());
+        return String.format("[%s]: %d", String.join(", ", wordsWithCount), group.getCount());
     }
 
     private static Map<String, String> parseArguments(String[] args) {

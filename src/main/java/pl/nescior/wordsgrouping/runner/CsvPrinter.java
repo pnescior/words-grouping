@@ -18,7 +18,7 @@ class CsvPrinter {
                 .withQuoteMode(QuoteMode.ALL)
                 .print(writer);
         for (Group group : groups) {
-            printer.printRecord(group.getCount(), group.getWords().iterator().next(), "", "");
+            printer.printRecord(group.getCount(), group.getMostPopularWord().get(), "", "");
         }
         printer.close(true);
     }
