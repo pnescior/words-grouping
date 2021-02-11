@@ -26,7 +26,7 @@ class Runner {
         List<String> strings = Files.readAllLines(Paths.get(arguments.get(FILE)));
         List<Group> groups = wordsGrouper.analyze(strings, getMaxGroupDistance(arguments));
         printFormattedGroups(groups);
-        csvPrinter.printTo("./data/result.csv", groups);
+        csvPrinter.printGroups(groups);
     }
 
     private static double getMaxGroupDistance(Map<String, String> arguments) {
