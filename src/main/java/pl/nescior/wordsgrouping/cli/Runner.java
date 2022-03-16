@@ -25,7 +25,13 @@ class Runner implements Callable<Integer> {
             required = true,
             description = {"input file to read data from", "words will be read from each line in the file, splitted by a space or any special character"}
     )
-    private File file;
+    private File inputFile;
+
+    @Option(names = {"-o", "--output"}, description = "file where the CSV result will be written to")
+    private File outputFile;
+
+    @Option(names = {"-p", "--print"}, description = "whether the results should be printed to console")
+    private boolean printToConsole;
 
     @Option(names = "--max-distance", description = "max Levenshtein distance for a single words group")
     private double maxDistance = 2.5;
@@ -38,10 +44,14 @@ class Runner implements Callable<Integer> {
 
     @Override
     public Integer call() throws Exception {
-        List<String> strings = Files.readAllLines(file.toPath());
+        List<String> strings = Files.readAllLines(inputFile.toPath());
         List<Group> groups = wordsGrouper.analyze(strings, maxDistance);
-        printFormattedGroups(groups);
-        csvPrinter.printGroups(groups);
+        if (printToConsole) {
+            printFormattedGroups(groups);
+        }
+        if (outputFile != null) {
+            csvPrinter.printGroups(groups, outputFile);
+        }
         return 0;
     }
 

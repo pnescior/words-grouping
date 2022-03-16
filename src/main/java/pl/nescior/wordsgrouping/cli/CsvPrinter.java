@@ -9,19 +9,14 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
 
 import static java.util.stream.Collectors.toCollection;
 
 class CsvPrinter {
-    private static final String OUTPUT_DIRECTORY = "data";
-    private static final String OUTPUT_FILENAME = "result.csv";
-
-    void printGroups(List<Group> groups) throws IOException {
-        File outputFile = createOutputFile(OUTPUT_FILENAME);
+    void printGroups(List<Group> groups, File outputFile) throws IOException {
+        createOrReplace(outputFile);
         CSVPrinter printer = CSVFormat.DEFAULT
                 .withHeader("weight", "words")
                 .print(new BufferedWriter(new FileWriter(outputFile)));
@@ -33,19 +28,16 @@ class CsvPrinter {
         printer.close(true);
     }
 
-    private static File createOutputFile(String fileName) throws IOException {
-        Path outputFilePath = Paths.get(OUTPUT_DIRECTORY, fileName);
-        File outputFile = outputFilePath.toFile();
-        if (outputFile.exists()) {
-            if (!outputFile.delete()) {
-                throw new IOException("unable to delete existing file " + outputFile);
+    private static void createOrReplace(File file) throws IOException {
+        if (file.exists()) {
+            if (!file.delete()) {
+                throw new IOException("unable to delete existing file " + file);
             }
-        } else {
-            Files.createDirectories(outputFilePath.getParent());
+        } else if (file.toPath().getParent() != null) {
+            Files.createDirectories(file.toPath().getParent());
         }
-        if (!outputFile.createNewFile()) {
-            throw new IOException("unable to create file " + outputFile);
+        if (!file.createNewFile()) {
+            throw new IOException("unable to create file " + file);
         }
-        return outputFile;
     }
 }
