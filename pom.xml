@@ -29,6 +29,11 @@
             <artifactId>commons-csv</artifactId>
             <version>1.8</version>
         </dependency>
+        <dependency>
+            <groupId>info.picocli</groupId>
+            <artifactId>picocli</artifactId>
+            <version>4.6.3</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -40,7 +45,7 @@
                     <finalName>${project.artifactId}</finalName>
                     <archive>
                         <manifest>
-                            <mainClass>pl.nescior.wordsgrouping.runner.Runner</mainClass>
+                            <mainClass>pl.nescior.wordsgrouping.cli.Runner</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

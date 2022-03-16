@@ -1,4 +1,4 @@
-package pl.nescior.wordsgrouping.runner;
+package pl.nescior.wordsgrouping.cli;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;

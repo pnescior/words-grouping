@@ -24,7 +24,7 @@ class StopWords {
     enum Language {
         PL("./stopwords.pl.txt");
 
-        private String fileName;
+        private final String fileName;
 
         Language(String fileName) {
             this.fileName = fileName;

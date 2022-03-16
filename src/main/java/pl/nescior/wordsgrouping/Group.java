@@ -41,13 +41,6 @@ public class Group implements Comparable<Group> {
         return words;
     }
 
-    public Word getMostPopularWord() {
-        return words.stream()
-                .sorted()
-                .findFirst()
-                .orElse(null);
-    }
-
     public int getCount() {
         return words.stream()
                 .map(Word::getCount)
